@@ -11,7 +11,8 @@ from tasks.celery import process_file
 from time import sleep
 import redis
 from functools import wraps
-
+from __init__ import create_app
+app = create_app()
 
 # Initialize Redis connection pool
 redis_pool = redis.ConnectionPool.from_url(current_app.config['REDIS_URL'])
