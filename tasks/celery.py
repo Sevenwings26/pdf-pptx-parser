@@ -1,13 +1,13 @@
 from celery import Celery
 from extensions import db, celery
-from .. import config
+from config import RABBITMQ_URL, REDIS_URL
 from parser import extract_pdf_data, extract_pptx_data
 from web.models import ParsedData
 
 
 celery = Celery(__name__)
-celery.conf.broker_url = config.RABBITMQ_URL
-celery.conf.result_backend = config.REDIS_URL
+celery.conf.broker_url = RABBITMQ_URL
+celery.conf.result_backend = REDIS_URL
 
 @celery.task(bind=True)
 def process_file(self, file_path, file_ext, file_id):
