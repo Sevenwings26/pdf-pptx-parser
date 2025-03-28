@@ -42,4 +42,4 @@ RUN chmod -R 750 /app/uploads
 # Start the Flask application
 # CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
 # Final CMD should be:
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "120", "--workers", "2", "app:create_app()"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "120", "--workers", "2", "run:app"]
