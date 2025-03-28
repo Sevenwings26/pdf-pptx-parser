@@ -6,7 +6,7 @@ import psycopg2
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = 'uploads'
-MAX_FILE_SIZE = 12 * 1024 * 1024  # 12MB
+MAX_FILE_SIZE = decouple.config("MAX_FILE_SIZE")
 ALLOWED_EXTENSIONS = {'pdf', 'pptx'}
 
 # Database configuration
@@ -18,5 +18,12 @@ SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace('postgres://', 'postgresql://')
 SECRET_KEY = decouple.config('SECRET_KEY')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+RABBITMQ_URL = decouple.config('RABBITMQ_URL')
+REDIS_URL = decouple.config('REDIS_URL')
+
 # Ensure upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+
+CACHE_DEFAULT_TIMEOUT = 60
+CACHE_KEY_PREFIX = 'fileparser_'

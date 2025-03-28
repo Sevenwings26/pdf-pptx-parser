@@ -1,5 +1,6 @@
+import os
 from flask import Flask
-from extensions import db, api
+from extensions import db, api, celery
 from config import SQLALCHEMY_DATABASE_URI, UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS, SECRET_KEY
 
 def create_app():
@@ -16,7 +17,8 @@ def create_app():
 
     # Initialize extensions
     db.init_app(app)
-    
+    celery.conf.update(app.config)
+
     # Register blueprints
     from api.routes import api_ns
     from web.routes import web_bp
@@ -25,4 +27,7 @@ def create_app():
     api.init_app(app)
     api.add_namespace(api_ns)
     
+    # Create upload folder
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
     return app

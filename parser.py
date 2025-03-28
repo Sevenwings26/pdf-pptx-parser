@@ -1,6 +1,6 @@
 import pptx
 from PyPDF2 import PdfReader
-# "error": "PDF parsing failed: PdfFileReader is deprecated and was removed in PyPDF2 3.0.0. Use PdfReader instead."
+
 # Extract pdf data 
 def extract_pdf_data(file_path):
     content = [] # to store extracted text
