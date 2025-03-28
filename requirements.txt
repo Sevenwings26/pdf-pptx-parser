@@ -26,8 +26,7 @@ lxml==5.3.1
 MarkupSafe==3.0.2
 pillow==11.1.0
 prompt_toolkit==3.0.50
-psycopg==3.2.6
-psycopg2==2.9.10
+psycopg2-binary==2.9.3
 PyPDF2==3.0.1
 python-dateutil==2.9.0.post0
 python-decouple==3.8
