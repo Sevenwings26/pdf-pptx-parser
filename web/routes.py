@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, send_file
-from extensions import db, cache
-from .models import FileUploaded, ParsedData
-from services.queue_services import QueueService
-from services.file_service import FileService
-from config import UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS
+from extensions import db, cache  
+from web.models import FileUploaded, ParsedData 
+from config import UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS 
+from services.file_service import FileService 
 import os
 import uuid
 from datetime import datetime
@@ -11,6 +10,11 @@ from time import time
 
 
 web_bp = Blueprint('web', __name__, template_folder='templates')
+
+# Lazy loader for QueueService to break circular imports
+def get_queue_service():
+    from services.queue_services import QueueService  # Local import
+    return QueueService()
 
 @web_bp.route("/", methods=["GET", "POST"])
 def index():
@@ -47,7 +51,7 @@ def index():
 
             # Process file through services
             uploaded_file = FileService.save_file(file)
-            QueueService.enqueue_file_processing(
+            get_queue_service().enqueue_file_processing(  # Using the lazy loader
                 file_path=os.path.join(UPLOAD_FOLDER, uploaded_file.filename),
                 file_ext=file_ext,
                 file_id=uploaded_file.id
@@ -91,7 +95,7 @@ def view_file(file_id):
     file = FileUploaded.query.get_or_404(file_id)
     
     # Get processing status from queue service
-    status = QueueService.get_processing_status(file_id)
+    status = get_queue_service().get_processing_status(file_id)  # Using the lazy loader
     
     # Get parsed content if available
     parsed_content = None
@@ -111,7 +115,7 @@ def view_file(file_id):
 @web_bp.route('/files/<int:file_id>/status')
 def file_status(file_id):
     """JSON endpoint for status updates (used by AJAX)"""
-    status = QueueService.get_processing_status(file_id)
+    status = get_queue_service().get_processing_status(file_id)  # Using the lazy loader
     return {
         'status': status.get('status'),
         'progress': status.get('progress', 0),
@@ -131,6 +135,6 @@ def download_file(file_id):
     return send_file(
         file_path,
         as_attachment=True,
-        download_name=file.filename
+        download_name=file.filename,
+        mimetype='application/octet-stream'  # Added MIME type
     )
-
