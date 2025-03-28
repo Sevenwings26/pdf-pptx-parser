@@ -17,6 +17,12 @@ SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace('postgres://', 'postgresql://')
 
 SECRET_KEY = decouple.config('SECRET_KEY')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_ENGINE_OPTIONS = {
+    "pool_pre_ping": True,
+    "pool_recycle": 300,
+    "pool_size": 10,
+    "max_overflow": 5
+}
 
 RABBITMQ_URL = decouple.config('RABBITMQ_URL')
 REDIS_URL = decouple.config('REDIS_URL')
