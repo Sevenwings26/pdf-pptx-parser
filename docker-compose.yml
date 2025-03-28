@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.worker
-    env_file: .env  # Single source of truth
+    env_file: .env
     depends_on:
       - db
       - redis
