@@ -36,8 +36,8 @@ def create_app():
     })
 
     # Register blueprints
-    from vester.api.routes import api_ns  # Absolute import
-    from vester.web.routes import web_bp  # Absolute import
+    from api.routes import api_ns
+    from web.routes import web_bp
     
     api.init_app(app)
     api.add_namespace(api_ns)
