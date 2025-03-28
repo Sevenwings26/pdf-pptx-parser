@@ -8,7 +8,7 @@ from services.file_service import FileService
 import os
 from datetime import datetime
 import uuid
-from config import UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS
+from ..config import UPLOAD_FOLDER, MAX_FILE_SIZE, ALLOWED_EXTENSIONS
 
 # Response Models
 upload_model = api_ns.model('UploadedFile', {

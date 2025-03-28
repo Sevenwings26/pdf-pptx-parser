@@ -30,6 +30,34 @@ This project provides a web application and api endpoints that allows users to u
    git clone https://github.com/Sevenwings26/pdf-pptx-parser.git
    cd pdf-pptx-parser
    ```
+vester/
+├── __init__.py
+├── api/
+│   ├── __init__.py
+│   ├── routes.py
+├── web/
+│   ├── __init__.py
+│   └── models.py
+│   ├── routes.py
+│   └── templates/
+│       └── index.html
+├── tasks/           
+│   ├── __init__.py
+│   └── celery.py
+├── services/        
+│   ├── __init__.py
+│   ├── file_service.py
+│   └── queue_service.py
+├── parser.py
+├── config.py
+├── extensions.py
+├── requirements.txt 
+├── Dockerfile         
+├── docker-compose.yml 
+├── .env
+├── run.py
+
+
 2. Create a virtual environment and install dependencies:
    ```bash
    python -m venv venv

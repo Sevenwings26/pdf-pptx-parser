@@ -1,6 +1,6 @@
 from celery import Celery
 from extensions import db, celery
-from . import config
+from .. import config
 from parser import extract_pdf_data, extract_pptx_data
 from web.models import ParsedData
 
